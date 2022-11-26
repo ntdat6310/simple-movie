@@ -1,28 +1,31 @@
 import React from "react";
-import { useSwiper } from "swiper/react";
+import { Link } from "react-router-dom";
 
-export default function MovieCard() {
-  const swiper = useSwiper();
+export default function MovieCard({ item }) {
+  const { original_title, backdrop_path, release_date, vote_average } = item;
 
   return (
-    <div className="movie-card rounded-lg p-3 bg-slate-800">
+    <div className="movie-card  flex flex-col justify-around rounded-lg p-3 bg-slate-800 w-full h-full select-none">
       <div className="w-full h-[250px] overflow-hidden rounded-lg">
         <img
-          src="https://m.media-amazon.com/images/M/MV5BMjMxNjY2MDU1OV5BMl5BanBnXkFtZTgwNzY1MTUwNTM@._V1_FMjpg_UX1000_.jpg"
-          alt=""
+          src={`https://image.tmdb.org/t/p/w500/${backdrop_path}`}
+          alt={original_title}
           className=" object-cover w-full h-full rounded-lg hover:scale-110 transition-all duration-300"
         />
       </div>
-      <h3 className=" text-lg font-bold mt-3 mb-1">Spiderman: Homecoming</h3>
+      <h3 className=" text-lg font-bold mt-3 mb-1">{original_title}</h3>
       <div className="flex items-center justify-between mb-6 text-sm text-gray-400">
-        <p>2017</p>
-        <p onClick={() => swiper.slideNext()}>
-          7.4<i className="fa-solid fa-star text-yellow-400 ml-2 "></i>
+        <p>{new Date(release_date).getFullYear()}</p>
+        <p>
+          {vote_average}
+          <i className="fa-solid fa-star text-yellow-400 ml-2 "></i>
         </p>
       </div>
-      <button className="bg-primary py-2 px-8 rounded-lg font-bold text-md w-full">
-        Watch <i className="fa-solid fa-circle-play" />
-      </button>
+      <Link to={`/movie/${item.id}`}>
+        <button className="bg-primary py-2 px-8 rounded-lg font-bold text-md w-full mt-auto">
+          Watch <i className="fa-solid fa-circle-play" />
+        </button>
+      </Link>
     </div>
   );
 }
