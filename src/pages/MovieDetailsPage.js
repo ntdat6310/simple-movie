@@ -2,43 +2,46 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import useSWR from "swr";
 import CastList from "../components/cast/CastList";
+import FailedToLoadData from "../components/common/FailedToLoadData";
 import Loading from "../components/loading/Loading";
 import SimilarMovieList from "../components/movie/SimilarMovieList";
 import Trailer from "../components/trailer/Trailer";
-import { api_key_themoviedb, fetcher } from "../config";
+import { fetcher, tmdb } from "../config";
 import "../scss/similar.scss";
 import "../scss/trailer.scss";
 
 export default function MovieDetailsPage() {
   const { movieId } = useParams();
+
   const { data: movie, error: errMovie } = useSWR(
-    `https://api.themoviedb.org/3/movie/${movieId}?api_key=${api_key_themoviedb}`,
+    tmdb.getMovieDetails(movieId),
     fetcher
   );
 
   const { data: credits, error: errCredits } = useSWR(
-    `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${api_key_themoviedb}`,
+    tmdb.getMovieCredits(movieId),
     fetcher
   );
 
   const { data: trailers, error: trailerError } = useSWR(
-    `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${api_key_themoviedb}`,
+    tmdb.getMovieVideos(movieId),
     fetcher
   );
 
   const { data: similars, error: similarError } = useSWR(
-    `https://api.themoviedb.org/3/movie/${movieId}/similar?api_key=${api_key_themoviedb}`,
+    tmdb.getSimilarMovies(movieId),
     fetcher
   );
 
   if (errMovie || errCredits || trailerError || similarError)
-    return <div>Failed to load Data</div>;
+    return <FailedToLoadData />;
 
   if (!movie || !credits || !trailers || !similars) return <Loading />;
 
   const { backdrop_path, original_title, genres, overview } = movie;
   const { cast } = credits;
   return (
+    // BANNER
     <div className="mt-5 mb-10">
       <div className="relative mb-[200px]">
         <div className="overlay bg-gradient-to-t from-black to-transparent w-full h-[600px] absolute inset-0 z-10"></div>
@@ -46,13 +49,13 @@ export default function MovieDetailsPage() {
         <div
           className="banner w-full h-[600px] bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: `url(https://image.tmdb.org/t/p/original/${backdrop_path})`,
+            backgroundImage: `url(${tmdb.getMovieImage(backdrop_path)})`,
           }}
         ></div>
 
         <div className="w-[800px] h-[400px] absolute z-20 bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2">
           <img
-            src={`https://image.tmdb.org/t/p/original/${backdrop_path}`}
+            src={tmdb.getMovieImage(backdrop_path)}
             alt={movieId}
             className="w-full h-full object-cover rounded-3xl"
           />

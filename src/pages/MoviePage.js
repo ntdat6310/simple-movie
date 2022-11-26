@@ -4,15 +4,13 @@ import useSWR from "swr";
 import Loading from "../components/loading/Loading";
 import MovieCard from "../components/movie/MovieCard";
 import Pagination from "../components/pagination/Pagination";
-import { api_key_themoviedb, fetcher } from "../config";
+import { fetcher, tmdb } from "../config";
 import "../scss/movie.scss";
 
 export default function MoviePage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchKey, setSearchKey] = useState("");
-  const [url, setUrl] = useState(
-    `https://api.themoviedb.org/3/movie/popular?api_key=${api_key_themoviedb}&page=${currentPage}`
-  );
+  const [url, setUrl] = useState(tmdb.getMovieList("popular", 1));
 
   const handleSearchInputChange = (e) => {
     setSearchKey(e.target.value);
@@ -25,26 +23,18 @@ export default function MoviePage() {
     setCurrentPage(newPage);
 
     if (searchKey === "") {
-      setUrl(
-        `https://api.themoviedb.org/3/movie/popular?api_key=${api_key_themoviedb}&page=${newPage}`
-      );
+      setUrl(tmdb.getMovieList("popular", newPage));
     } else {
-      setUrl(
-        `https://api.themoviedb.org/3/search/movie?api_key=${api_key_themoviedb}&query=${searchKey}&page=${newPage}`
-      );
+      setUrl(tmdb.getSearchMovie(searchKey, newPage));
     }
   };
 
   const handleSearchSubmit = () => {
     setCurrentPage(1);
     if (searchKey === "") {
-      setUrl(
-        `https://api.themoviedb.org/3/movie/popular?api_key=${api_key_themoviedb}&page=${1}`
-      );
+      setUrl(tmdb.getMovieList("popular", 1));
     } else {
-      setUrl(
-        `https://api.themoviedb.org/3/search/movie?api_key=${api_key_themoviedb}&query=${searchKey}&page=${1}`
-      );
+      setUrl(tmdb.getSearchMovie(searchKey, 1));
     }
   };
 

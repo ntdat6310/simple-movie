@@ -5,16 +5,15 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { Swiper, SwiperSlide } from "swiper/react";
 import useSWR from "swr";
-import { api_key_themoviedb, fetcher } from "../../config";
+import { fetcher, tmdb } from "../../config";
+import FailedToLoadData from "../common/FailedToLoadData";
+import Loading from "../loading/Loading";
 
 export default function Banner() {
-  const { data, error } = useSWR(
-    `https://api.themoviedb.org/3/movie/upcoming?api_key=${api_key_themoviedb}`,
-    fetcher
-  );
+  const { data, error } = useSWR(tmdb.getMovieList("upcoming"), fetcher);
 
-  if (error) return <div>Failed to load data - {error}</div>;
-  if (!data) return <div>Loading</div>;
+  if (error) return <FailedToLoadData />;
+  if (!data) return <Loading />;
 
   const movies = data?.results || [];
 
@@ -38,7 +37,7 @@ export default function Banner() {
       <div className="banner w-full h-full rounded-lg bg-white relative">
         <div className="overlay absolute inset-0 bg-gradient-to-t from-[rgba(0,0,0,1)] to-transparent"></div>
         <img
-          src={`https://image.tmdb.org/t/p/w500/${movie.backdrop_path}`}
+          src={`${tmdb.getMovieImage(movie.backdrop_path)}`}
           alt=""
           className="w-full h-full object-cover rounded-lg"
         />

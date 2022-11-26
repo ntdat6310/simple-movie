@@ -1,5 +1,5 @@
 import React from "react";
-import { default_img_path } from "../../config";
+import { default_img_path, tmdb } from "../../config";
 
 export default function CastCard({ cast }) {
   const { name, profile_path } = cast;
@@ -9,16 +9,14 @@ export default function CastCard({ cast }) {
       <img
         src={
           profile_path
-            ? `https://image.tmdb.org/t/p/original/${profile_path}`
+            ? `${tmdb.getMovieImage(profile_path)}`
             : `${default_img_path}`
         }
         alt={cast.id}
         className="w-full h-full object-cover rounded-lg"
       />
       <div className="flex justify-center items-center rounded-b-lg opacity-0 w-full h-[100px] absolute bottom-0 bg-[rgba(0,0,0,0.8)] translate-y-full group-hover:translate-y-0 group-hover:opacity-100 transition-all">
-        <p className="text-xl px-4 text-primary">
-          {name}
-        </p>
+        <p className="text-xl px-4 text-primary">{name}</p>
       </div>
     </div>
   );
