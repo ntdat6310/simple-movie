@@ -1,28 +1,49 @@
 import React, { useState } from "react";
 import "swiper/css";
 import useSWR from "swr";
+import Loading from "../components/loading/Loading";
 import MovieCard from "../components/movie/MovieCard";
+import Pagination from "../components/pagination/Pagination";
 import { api_key_themoviedb, fetcher } from "../config";
 import "../scss/movie.scss";
 
 export default function MoviePage() {
+  const [currentPage, setCurrentPage] = useState(1);
   const [searchKey, setSearchKey] = useState("");
   const [url, setUrl] = useState(
-    `https://api.themoviedb.org/3/movie/popular?api_key=${api_key_themoviedb}`
+    `https://api.themoviedb.org/3/movie/popular?api_key=${api_key_themoviedb}&page=${currentPage}`
   );
 
   const handleSearchInputChange = (e) => {
     setSearchKey(e.target.value);
   };
 
-  const handleSearchSubmit = () => {
+  const handlePaginationClick = (newPage) => {
+    if (typeof newPage !== "number") {
+      throw new Error("newPage must be a number!");
+    }
+    setCurrentPage(newPage);
+
     if (searchKey === "") {
       setUrl(
-        `https://api.themoviedb.org/3/movie/popular?api_key=${api_key_themoviedb}`
+        `https://api.themoviedb.org/3/movie/popular?api_key=${api_key_themoviedb}&page=${newPage}`
       );
     } else {
       setUrl(
-        `https://api.themoviedb.org/3/search/movie?api_key=${api_key_themoviedb}&query=${searchKey}`
+        `https://api.themoviedb.org/3/search/movie?api_key=${api_key_themoviedb}&query=${searchKey}&page=${newPage}`
+      );
+    }
+  };
+
+  const handleSearchSubmit = () => {
+    setCurrentPage(1);
+    if (searchKey === "") {
+      setUrl(
+        `https://api.themoviedb.org/3/movie/popular?api_key=${api_key_themoviedb}&page=${1}`
+      );
+    } else {
+      setUrl(
+        `https://api.themoviedb.org/3/search/movie?api_key=${api_key_themoviedb}&query=${searchKey}&page=${1}`
       );
     }
   };
@@ -42,6 +63,7 @@ export default function MoviePage() {
   }
 
   const movies = data?.results;
+
   return (
     <>
       {/* SEARCH INPUT */}
@@ -63,12 +85,7 @@ export default function MoviePage() {
       </div>
 
       {/* LOADING */}
-      {!data && (
-        <div className="flex justify-center items-center gap-10 my-10">
-          <div className="inline-block w-10 h-10 rounded-full border-4 border-primary border-t-transparent animate-spin"></div>
-          <div className="text-white text-center text-3xl">Loading</div>
-        </div>
-      )}
+      {!data && <Loading />}
 
       {/* MOVIES */}
       {data && (
@@ -78,6 +95,15 @@ export default function MoviePage() {
               return <MovieCard key={movie.id} item={movie} />;
             })}
         </div>
+      )}
+
+      {/* PAGINATION */}
+      {data && (
+        <Pagination
+          totalPages={data.total_pages}
+          onPaginationClick={handlePaginationClick}
+          currentPage={currentPage}
+        />
       )}
     </>
   );

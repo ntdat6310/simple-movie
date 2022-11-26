@@ -1,0 +1,29 @@
+$color-primary: #f62682;
+$color-secondary: #f6268490;
+
+.pagination {
+  color: white;
+  ul {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px;
+    li {
+      line-height: normal;
+      padding: 8px 12px;
+      border-radius: 4px;
+      &:hover {
+        background-color: $color-secondary;
+        transition: 0.2s linear;
+      }
+    }
+    .selected {
+      color: white;
+      background-color: $color-primary;
+    }
+
+    .disabled {
+      opacity: 0.3;
+    }
+  }
+}

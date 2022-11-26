@@ -2,6 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import useSWR from "swr";
 import CastList from "../components/cast/CastList";
+import Loading from "../components/loading/Loading";
 import SimilarMovieList from "../components/movie/SimilarMovieList";
 import Trailer from "../components/trailer/Trailer";
 import { api_key_themoviedb, fetcher } from "../config";
@@ -10,7 +11,6 @@ import "../scss/trailer.scss";
 
 export default function MovieDetailsPage() {
   const { movieId } = useParams();
-  console.log("movieId", movieId);
   const { data: movie, error: errMovie } = useSWR(
     `https://api.themoviedb.org/3/movie/${movieId}?api_key=${api_key_themoviedb}`,
     fetcher
@@ -34,14 +34,12 @@ export default function MovieDetailsPage() {
   if (errMovie || errCredits || trailerError || similarError)
     return <div>Failed to load Data</div>;
 
-  if (!movie || !credits || !trailers || !similars)
-    return <div>Loading...</div>;
+  if (!movie || !credits || !trailers || !similars) return <Loading />;
 
   const { backdrop_path, original_title, genres, overview } = movie;
   const { cast } = credits;
-  console.log("similars", similars);
   return (
-    <div className="my-10">
+    <div className="mt-5 mb-10">
       <div className="relative mb-[200px]">
         <div className="overlay bg-gradient-to-t from-black to-transparent w-full h-[600px] absolute inset-0 z-10"></div>
 

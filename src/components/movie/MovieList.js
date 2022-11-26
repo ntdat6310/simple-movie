@@ -8,6 +8,7 @@ import useSWR from "swr";
 import { api_key_themoviedb, fetcher } from "../../config";
 import "../../scss/movie.scss";
 import MovieCard from "./MovieCard";
+import Loading from "../loading/Loading";
 
 export default function MovieList({
   heading,
@@ -19,7 +20,7 @@ export default function MovieList({
     fetcher
   );
   if (error) return <div>Failed to load - {error}</div>;
-  if (!data) return <div>Loading...</div>;
+  if (!data) return <Loading />;
 
   const movies = data.results;
   if (movies && movies.length > 10) {
