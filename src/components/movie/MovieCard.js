@@ -11,7 +11,7 @@ export default function MovieCard({ item }) {
         <img
           src={
             backdrop_path
-              ? `${tmdb.getMovieImage(backdrop_path)}`
+              ? `${tmdb.image500(backdrop_path)}`
               : `${default_img_path}`
           }
           alt={original_title}

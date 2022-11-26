@@ -19,17 +19,17 @@ export default function MovieDetailsPage() {
   );
 
   const { data: credits, error: errCredits } = useSWR(
-    tmdb.getMovieCredits(movieId),
+    tmdb.getMovieMeta(movieId, "credits"),
     fetcher
   );
 
   const { data: trailers, error: trailerError } = useSWR(
-    tmdb.getMovieVideos(movieId),
+    tmdb.getMovieMeta(movieId, "videos"),
     fetcher
   );
 
   const { data: similars, error: similarError } = useSWR(
-    tmdb.getSimilarMovies(movieId),
+    tmdb.getMovieMeta(movieId, "similar"),
     fetcher
   );
 
@@ -49,13 +49,13 @@ export default function MovieDetailsPage() {
         <div
           className="banner w-full h-[600px] bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: `url(${tmdb.getMovieImage(backdrop_path)})`,
+            backgroundImage: `url(${tmdb.imageOriginal(backdrop_path)})`,
           }}
         ></div>
 
         <div className="w-[800px] h-[400px] absolute z-20 bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2">
           <img
-            src={tmdb.getMovieImage(backdrop_path)}
+            src={tmdb.imageOriginal(backdrop_path)}
             alt={movieId}
             className="w-full h-full object-cover rounded-3xl"
           />

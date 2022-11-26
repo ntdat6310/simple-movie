@@ -1,6 +1,7 @@
 const tmdbEndpoint = "https://api.themoviedb.org/3";
 
-const tmdbImageEndpoint = "https://image.tmdb.org/t/p/original/";
+const tmdbImageOriginalEndpoint = "https://image.tmdb.org/t/p/original/";
+const tmdbImage500Endpoint = "https://image.tmdb.org/t/p/w500/";
 
 export const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -13,22 +14,19 @@ export const tmdb = {
   getMovieList: (type, page = 1) => {
     return `${tmdbEndpoint}/movie/${type}?api_key=${api_key_tmdb}&page=${page}`;
   },
+  getSearchMovie: (searchKey, page = 1) => {
+    return `${tmdbEndpoint}/search/movie?api_key=${api_key_tmdb}&query=${searchKey}&page=${page}`;
+  },
   getMovieDetails: (movieId) => {
     return `${tmdbEndpoint}/movie/${movieId}?api_key=${api_key_tmdb}`;
   },
-  getMovieCredits: (movieId) => {
-    return `${tmdbEndpoint}/movie/${movieId}/credits?api_key=${api_key_tmdb}`;
+  getMovieMeta: (movieId, type) => {
+    return `${tmdbEndpoint}/movie/${movieId}/${type}?api_key=${api_key_tmdb}`;
   },
-  getMovieVideos: (movieId) => {
-    return `${tmdbEndpoint}/movie/${movieId}/videos?api_key=${api_key_tmdb}`;
+  imageOriginal: (imgPath) => {
+    return `${tmdbImageOriginalEndpoint}${imgPath}`;
   },
-  getSimilarMovies: (movieId) => {
-    return `${tmdbEndpoint}/movie/${movieId}/similar?api_key=${api_key_tmdb}`;
-  },
-  getSearchMovie: (searchKey, page) => {
-    return `${tmdbEndpoint}/search/movie?api_key=${api_key_tmdb}&query=${searchKey}&page=${page}`;
-  },
-  getMovieImage: (imgPath) => {
-    return `${tmdbImageEndpoint}${imgPath}`;
+  image500: (imgPath) => {
+    return `${tmdbImage500Endpoint}${imgPath}`;
   },
 };

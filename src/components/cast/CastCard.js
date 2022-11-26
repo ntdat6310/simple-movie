@@ -9,7 +9,7 @@ export default function CastCard({ cast }) {
       <img
         src={
           profile_path
-            ? `${tmdb.getMovieImage(profile_path)}`
+            ? `${tmdb.image500(profile_path)}`
             : `${default_img_path}`
         }
         alt={cast.id}

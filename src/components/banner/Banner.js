@@ -37,7 +37,7 @@ export default function Banner() {
       <div className="banner w-full h-full rounded-lg bg-white relative">
         <div className="overlay absolute inset-0 bg-gradient-to-t from-[rgba(0,0,0,1)] to-transparent"></div>
         <img
-          src={`${tmdb.getMovieImage(movie.backdrop_path)}`}
+          src={`${tmdb.imageOriginal(movie.backdrop_path)}`}
           alt=""
           className="w-full h-full object-cover rounded-lg"
         />
