@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { default_img_path } from "../../config";
 
 export default function MovieCard({ item }) {
   const { original_title, backdrop_path, release_date, vote_average } = item;
@@ -8,7 +9,7 @@ export default function MovieCard({ item }) {
     <div className="movie-card  flex flex-col justify-around rounded-lg p-3 bg-slate-800 w-full h-full select-none">
       <div className="w-full h-[250px] overflow-hidden rounded-lg">
         <img
-          src={`https://image.tmdb.org/t/p/w500/${backdrop_path}`}
+          src={backdrop_path?`https://image.tmdb.org/t/p/w500/${backdrop_path}`:`${default_img_path}`}
           alt={original_title}
           className=" object-cover w-full h-full rounded-lg hover:scale-110 transition-all duration-300"
         />

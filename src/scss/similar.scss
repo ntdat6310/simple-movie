@@ -1,0 +1,21 @@
+.similar {
+    .swiper {
+      position: unset;
+      .swiper-button-prev {
+        color: white !important;
+        left: -60px;
+      }
+  
+      .swiper-button-next {
+        color: white !important;
+        right: -60px;
+      }
+
+      .swiper-slide{
+        height: auto;
+      }
+    }
+
+    
+  }
+  
