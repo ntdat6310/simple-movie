@@ -20,6 +20,14 @@ export default function Header() {
       >
         Movies
       </NavLink>
+      <NavLink
+        to={"/moviesV2"}
+        className={({ isActive }) =>
+          isActive ? "text-primary cursor-pointer" : "cursor-pointer"
+        }
+      >
+        Movies - Load More
+      </NavLink>
     </header>
   );
 }
