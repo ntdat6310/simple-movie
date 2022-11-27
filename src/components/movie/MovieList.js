@@ -11,11 +11,7 @@ import FailedToLoadData from "../common/FailedToLoadData";
 import Loading from "../loading/Loading";
 import MovieCard from "./MovieCard";
 
-export default function MovieList({
-  heading,
-  type = "now_playing",
-  slidesPerView = 4,
-}) {
+export default function MovieList({ heading, type = "now_playing" }) {
   const { data, error } = useSWR(tmdb.getMovieList(type), fetcher);
   if (error) return <FailedToLoadData />;
   if (!data) return <Loading />;
@@ -23,7 +19,7 @@ export default function MovieList({
   const movies = data.results;
   if (movies && movies.length > 0) {
     return (
-      <section className="movies-layout page-container text-white mb-10 relative">
+      <section className="movies-layout text-white mb-10 relative max-w-[90%] mx-auto lg:max-w-[968px] xl:max-w-[1080px]">
         <div className="movie-heading flex justify-between mb-5">
           <h2 className="text-2xl font-bold">{heading}</h2>
         </div>
@@ -32,8 +28,19 @@ export default function MovieList({
           <Swiper
             modules={[Navigation]}
             spaceBetween={20}
-            slidesPerView={slidesPerView}
+            slidesPerView={1}
             navigation={true}
+            breakpoints={{
+              640: {
+                slidesPerView: 2,
+              },
+              1024: {
+                slidesPerView: 3,
+              },
+              1280: {
+                slidesPerView: 4,
+              },
+            }}
           >
             {movies &&
               movies.length > 0 &&

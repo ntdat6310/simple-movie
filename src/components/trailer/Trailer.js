@@ -4,21 +4,19 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-export default function Trailer({ trailers, slidesPerView = 1 }) {
+export default function Trailer({ trailers }) {
   if (!trailers || trailers.length === 0) return null;
   return (
     <Swiper
       modules={[Navigation]}
       spaceBetween={20}
-      slidesPerView={slidesPerView}
+      slidesPerView={1}
       navigation={true}
     >
       {trailers.map((trailer) => {
         return (
           <SwiperSlide key={trailer.key}>
             <iframe
-              width="800"
-              height="480"
               src={`https://www.youtube.com/embed/${trailer.key}`}
               title={`${trailer.name}`}
               frameBorder="0"

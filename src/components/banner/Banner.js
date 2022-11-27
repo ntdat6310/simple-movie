@@ -18,7 +18,7 @@ export default function Banner() {
   const movies = data?.results || [];
 
   return (
-    <section className="banner h-[400px] bg-white page-container rounded-lg mb-10 select-none">
+    <section className="banner bg-white rounded-lg mb-10 select-none h-[400px] max-w-[90%] mx-auto lg:max-w-[968px] xl:max-w-[1080px]">
       <Swiper modules={[Navigation]} slidesPerView={1} navigation={true}>
         {movies.length > 0 &&
           movies.map((movie) => {
@@ -34,15 +34,17 @@ export default function Banner() {
 
   function BannerItem({ movie }) {
     return (
-      <div className="banner w-full h-full rounded-lg bg-white relative">
-        <div className="overlay absolute inset-0 bg-gradient-to-t from-[rgba(0,0,0,1)] to-transparent"></div>
+      <div className="w-full h-full rounded-lg bg-transparent relative">
+        <div className="overlay rounded-lg absolute inset-0 bg-gradient-to-t from-[rgba(0,0,0,1)] to-transparent"></div>
         <img
           src={`${tmdb.imageOriginal(movie.backdrop_path)}`}
           alt=""
           className="w-full h-full object-cover rounded-lg"
         />
         <div className="absolute left-5 top-1/2 text-white">
-          <h2 className="font-bold text-3xl mb-5">{movie.original_title}</h2>
+          <h2 className="font-bold text-2xl mb-5 lg:text-3xl">
+            {movie.original_title}
+          </h2>
           <div className="flex items-center gap-x-5 mb-8">
             <span className="border-2 border-white py-1 px-3 rounded-lg">
               {new Date(movie.release_date).getFullYear()}

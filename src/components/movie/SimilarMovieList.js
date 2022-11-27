@@ -6,13 +6,24 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "../../scss/movie.scss";
 import MovieCard from "./MovieCard";
 
-export default function SimilarMovieList({ similarMovies, slidesPerView = 3 }) {
+export default function SimilarMovieList({ similarMovies }) {
   return (
     <Swiper
       modules={[Navigation]}
       spaceBetween={20}
-      slidesPerView={slidesPerView}
       navigation={true}
+      slidesPerView={1}
+      breakpoints={{
+        768: {
+          slidesPerView: 2,
+        },
+        1028: {
+          slidesPerView: 3,
+        },
+        1280: {
+          slidesPerView: 4,
+        },
+      }}
     >
       {similarMovies.map((item) => {
         return (

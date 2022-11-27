@@ -6,18 +6,29 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "../../scss/cast.scss";
 import CastCard from "./CastCard";
 
-export default function CastList({ casts, slidesPerView = 3 }) {
+export default function CastList({ casts }) {
   if (!casts || casts.length === 0) return null;
 
   return (
     <>
       <h3 className="text-center text-2xl text-white pb-10">Casts</h3>
-      <div className="cast-list relative w-[800px] mx-auto">
+      <div className="cast-list relative h-[400px] max-w-[60%] mx-auto sm:max-w-[50%] md:max-w-[70%] ">
         <Swiper
           modules={[Navigation]}
           spaceBetween={20}
-          slidesPerView={slidesPerView}
           navigation={true}
+          slidesPerView={1}
+          breakpoints={{
+            768: {
+              slidesPerView: 2,
+            },
+            1028: {
+              slidesPerView: 3,
+            },
+            1280:{
+              slidesPerView: 4,
+            }
+          }}
         >
           {casts.map((cast) => {
             return (

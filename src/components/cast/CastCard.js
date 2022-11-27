@@ -5,7 +5,7 @@ export default function CastCard({ cast }) {
   const { name, profile_path } = cast;
   if (!profile_path) console.log(cast.id);
   return (
-    <div className="cast relative group">
+    <div className="cast relative group w-full h-full">
       <img
         src={
           profile_path
