@@ -31,6 +31,15 @@ function App() {
               </>
             }
           />
+          <Route
+            path="/simple-movie"
+            element={
+              <>
+                <Banner />
+                <HomePage />
+              </>
+            }
+          />
           <Route path="/movies" element={<MoviePage />} />
           <Route path="/moviesV2" element={<MoviePageV2 />} />
           <Route path="/movie/:movieId" element={<MovieDetailsPage />} />
