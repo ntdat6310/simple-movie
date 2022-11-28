@@ -53,12 +53,12 @@ export default function MoviePageV2() {
       <div className="search-form flex mx-5 my-5 border-4 border-slate-700 rounded-md">
         <input
           type="text"
-          className="flex-1 text-xl px-5 py-2 outline-none bg-transparent  text-white "
+          className="flex-1 text-xl px-5 py-2 outline-none bg-transparent text-white w-full"
           placeholder="Type to search..."
           value={searchKey}
           onChange={handleSearchInputChange}
         />
-        <button className="text-white py-2 px-4 bg-transparent hover:text-lg transition-all">
+        <button className="text-white py-2 px-4 bg-transparent hover:text-lg transition-all hidden sm:inline">
           <i className="fas fa-search" />
         </button>
       </div>
@@ -68,7 +68,7 @@ export default function MoviePageV2() {
 
       {/* MOVIES */}
       {data && (
-        <div className="grid grid-cols-4 gap-5 text-white px-5">
+        <div className="grid gap-5 text-white px-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {movies.length > 0 &&
             movies.map((movie) => {
               return <MovieCard key={movie.id} item={movie} />;

@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 export default function Header() {
   return (
-    <header className="header flex item-center justify-center gap-x-5 pt-5 mb-5 text-white">
+    <header className="header flex items-center justify-center flex-wrap gap-x-5 pt-5 mb-5 text-white">
       <NavLink
         to={"/"}
         className={({ isActive }) => {

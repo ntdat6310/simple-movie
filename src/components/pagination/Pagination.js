@@ -6,7 +6,7 @@ export default function Pagination({
   totalPages,
   currentPage,
   onPaginationClick,
-  pageRangeDisplayed = 3,
+  pageRangeDisplayed = 2,
 }) {
   // ! themoviedb doesn't accept page more than 500
   // ! {"errors":["page must be less than or equal to 500"],"success":false}
@@ -26,7 +26,7 @@ export default function Pagination({
         nextLabel={<i className="fa fa-angle-right"></i>}
         previousLabel={<i className="fa fa-angle-left"></i>}
         onPageChange={handlePageClick}
-        pageRangeDisplayed={pageRangeDisplayed}
+        pageRangeDisplayed={3}
         pageCount={totalPages}
         renderOnZeroPageCount={null}
       />
